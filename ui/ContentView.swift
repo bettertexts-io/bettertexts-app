@@ -32,7 +32,7 @@ private let styles = [
                     "Gen-Z", prompt: "gen-z language without being cringe bro"
     )
 ]
-private let media = [
+private let mediums = [
     PromptOption(title: "Bulletpoints", prompt: "bulletpoints"),
     PromptOption(title: "Tweet", prompt: "tweet no longer than 256 characters"),
     PromptOption(title: "E-Mail", prompt: "E-Mail with greeting and ending"),
@@ -42,7 +42,7 @@ private let media = [
 struct RadioList: View{
     public var title: String
     public var options: [PromptOption]
-    @State public var selected: UUID
+    @Binding public var selected: UUID
     
     public var body: some View {
         Picker(selection: $selected, label: Text(title)) {
@@ -58,19 +58,19 @@ struct RadioList: View{
 }
 
 struct ContentView: View {
+    private let apiUrl = URL(string: "https://api.bettertexts.io/api/v1/paraphrase")!
     @State private var selectedStyle = UUID()
     @State private var selectedMedium = UUID()
+    @State private var inputText = "Doinik bro ihc muss dich leider entlassen, sorry"
     @State private var versions: [String] = ["version a", "version b"]
     
     private func fetchApi() async -> [String]{
-        print("fetchApi()")
-        let apiUrl = URL(string: "https://api.bettertexts.io/api/v1/paraphrase")!
+        let styleOption = styles.first(where: { $0.id == selectedStyle })
+        let mediumOption = mediums.first(where: { $0.id == selectedMedium })
         
-        print(selectedStyle)
-        print(styles[0].id)
-        print(styles.first(where: { $0.id == selectedStyle })?.title)
+        let reqBody = ParaphraseRequestBody(input: inputText, style: styleOption!.prompt, medium: mediumOption!.prompt)
         
-        let reqBody = ParaphraseRequestBody(input: "test", style: "Test", medium: "hee")
+        print(reqBody)
         
         guard let encoded = try? JSONEncoder().encode(reqBody) else {
             print("Failed to encode order")
@@ -99,12 +99,16 @@ struct ContentView: View {
                 .font(.system(size: 20, weight: .medium))
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(10)
-            RadioList(title: "Style", options: styles, selected: selectedStyle)
-            RadioList(title: "Medium", options: media, selected: selectedMedium)
+            
+            TextField("Input Text", text: $inputText)
+            
+            RadioList(title: "Style", options: styles, selected: $selectedStyle)
+            RadioList(title: "Medium", options: mediums, selected: $selectedMedium)
             Button("Fetch"){
                 print("tapped")
                 Task {
                     versions = await fetchApi()
+                    print(versions)
                 }
             }
             Text(versions[0])
