@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+struct Environment {
+    var API_KEY: String
+    var API_URL: String
+}
+
 struct ParaphraseRequestBody: Codable {
     var input: String
     var style: String
@@ -14,7 +19,6 @@ struct ParaphraseRequestBody: Codable {
 }
 
 struct ParaphraseResponseBody: Codable {
-    var status: Int
     var results: [String]
 }
 
@@ -58,37 +62,56 @@ struct RadioList: View{
 }
 
 struct ContentView: View {
-    private let apiUrl = URL(string: "https://api.bettertexts.io/api/v1/paraphrase")!
+    private var env: [String: String]?
+    private var apiUrl: URL?
+    private var apiKey: String?
     @State private var selectedStyle = UUID()
     @State private var selectedMedium = UUID()
     @State private var inputText = "Doinik bro ihc muss dich leider entlassen, sorry"
     @State private var versions: [String] = ["version a", "version b"]
     
-    private func fetchApi() async -> [String]{
+    func getPlist(withName name: String) -> [String:String]?
+    {
+        guard let path = Bundle.main.path(forResource: name, ofType: "plist") else {return nil}
+        
+        let url = URL(fileURLWithPath: path)
+
+        let data = try! Data(contentsOf: url)
+
+        guard let plist = try! PropertyListSerialization.propertyList(from: data, options: .mutableContainers, format: nil) as? [String:String] else {return nil}
+        
+        return plist
+    }
+    
+    init () {
+        self.env = getPlist(withName: "Env")
+        self.apiUrl = URL(string: self.env!["API_URL"]!)!
+        self.apiKey = self.env!["API_KEY"]!
+    }
+    
+    private func fetchApi() async -> [String]?{
         let styleOption = styles.first(where: { $0.id == selectedStyle })
         let mediumOption = mediums.first(where: { $0.id == selectedMedium })
         
         let reqBody = ParaphraseRequestBody(input: inputText, style: styleOption!.prompt, medium: mediumOption!.prompt)
-        
-        print(reqBody)
-        
+                
         guard let encoded = try? JSONEncoder().encode(reqBody) else {
             print("Failed to encode order")
-            return []
+            return nil
         }
         
-        var request = URLRequest(url: apiUrl)
+        var request = URLRequest(url: apiUrl!)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(apiKey!, forHTTPHeaderField: "access_token")
         request.httpMethod = "POST"
         
         do {
             let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)
             let decoded = try JSONDecoder().decode(ParaphraseResponseBody.self, from: data)
-            print(decoded.results[0])
             return decoded.results
         } catch {
             print("Request failed")
-            return []
+            return nil
         }
         
     }
@@ -107,7 +130,11 @@ struct ContentView: View {
             Button("Fetch"){
                 print("tapped")
                 Task {
-                    versions = await fetchApi()
+                    guard let ret = await fetchApi() else {
+                        print("invalid versions[]")
+                        return
+                    }
+                    versions = ret
                     print(versions)
                 }
             }
