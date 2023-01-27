@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "430F62EB-44C9-441A-B716-19995FA15755"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F0F497CD-E5C8-4864-86AD-7DE4C55A41AE"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ui/ContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "fetchApi(to:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F0F497CD-E5C8-4864-86AD-7DE4C55A41AE - d8a1a71936f65406"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for ui.ContentView.fetchApi(to: Foundation.UUID) async -&gt; ()"
+                  moduleName = "ui"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/leolurch/Documents/1-projects/9-bettertext/ui/ui/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "128"
+                  endingLineNumber = "128"
+                  offsetFromSymbolStart = "2536">
+               </Location>
+               <Location
+                  uuid = "F0F497CD-E5C8-4864-86AD-7DE4C55A41AE - 6c3a3a3f22714e32"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for ui.ContentView.fetchApi(to: Foundation.UUID) async -&gt; ()"
+                  moduleName = "ui"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/leolurch/Documents/1-projects/9-bettertext/ui/ui/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "128"
+                  endingLineNumber = "128"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "F0F497CD-E5C8-4864-86AD-7DE4C55A41AE - 29d3a8a3faa3dc1a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for ui.ContentView.fetchApi(to: Foundation.UUID) async -&gt; ()"
+                  moduleName = "ui"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/leolurch/Documents/1-projects/9-bettertext/ui/ui/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "128"
+                  endingLineNumber = "128"
+                  offsetFromSymbolStart = "128">
+               </Location>
+               <Location
+                  uuid = "F0F497CD-E5C8-4864-86AD-7DE4C55A41AE - 519aac87407a001c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for ui.ContentView.fetchApi(to: Foundation.UUID) async -&gt; ()"
+                  moduleName = "ui"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/leolurch/Documents/1-projects/9-bettertext/ui/ui/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "128"
+                  endingLineNumber = "128"
+                  offsetFromSymbolStart = "80">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "402948A8-B8F9-4DB3-B470-37C8D0C4A12F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ui/ContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
+            landmarkName = "fetchApi(to:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
