@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+import Accessibility
+
 
 struct Environment {
     var API_KEY: String
@@ -31,7 +33,7 @@ struct PromptOption: Identifiable{
 
 private let styles = [
     PromptOption(type: PromptOptionType.Style, title: "Friendly", prompt: "friendly"),
-    PromptOption(type: PromptOptionType.Style, title: "Professional", prompt: "professional"),
+    PromptOption(type: PromptOptionType.Style, title: "Professional (Default)", prompt: "professional"),
     PromptOption(type: PromptOptionType.Style, title: "Witty", prompt: "witty"),
     PromptOption(type: PromptOptionType.Style, title:
                     "Exciting", prompt: "exciting"
@@ -62,14 +64,14 @@ private let styles = [
     )
 ]
 private let mediums = [
-    PromptOption(type: PromptOptionType.Medium, title: "Joke", prompt: "Joke"),
-    PromptOption(type: PromptOptionType.Medium, title: "Email", prompt: "Email"),
-    PromptOption(type: PromptOptionType.Medium, title: "Letter", prompt: "Letter"),
-    PromptOption(type: PromptOptionType.Medium, title: "Tweet", prompt: "Tweet"),
-    PromptOption(type: PromptOptionType.Medium, title: "Bulletpoints", prompt: "Bulletpoints")
+    PromptOption(type: PromptOptionType.Medium, title: "Joke", prompt: "joke"),
+    PromptOption(type: PromptOptionType.Medium, title: "Email", prompt: "email"),
+    PromptOption(type: PromptOptionType.Medium, title: "Letter", prompt: "letter"),
+    PromptOption(type: PromptOptionType.Medium, title: "Tweet", prompt: "tweet"),
+    PromptOption(type: PromptOptionType.Medium, title: "Bulletpoints", prompt: "bulletpoints")
 ]
 private let languages = [
-    PromptOption(type: PromptOptionType.Language, title: "English", prompt: "en"),
+    PromptOption(type: PromptOptionType.Language, title: "English (Default)", prompt: "en"),
     PromptOption(type: PromptOptionType.Language, title: "German", prompt: "de")
 ]
 
@@ -131,9 +133,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let selectedItem = sender as! PromptMenuItem
         print("Clicked menu item: \(selectedItem)")
         
-        
         var langCode = "en"
-        var style: String = ""
+        var style: String = "professional"
         var medium: String = ""
         
         var path = ""
@@ -162,13 +163,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if(input != nil){
             Task{ [style, medium, langCode] in
                 let paraphrase = await api.getParaphrase(originalText: input!, style: style, medium: medium, langCode: langCode)
-                print("Got response from API", paraphrase)
+                print("Got response from API", input, paraphrase)
                 if(paraphrase != nil){
                     Clipboard.setString(value: paraphrase!)
                 }
             }
         }
     }
+
     
     func createPromptMenuItems(from options: [PromptOption], subMenuTree: [[PromptOption]]? = nil) -> [PromptMenuItem] {
         var menuItems: [PromptMenuItem] = []
